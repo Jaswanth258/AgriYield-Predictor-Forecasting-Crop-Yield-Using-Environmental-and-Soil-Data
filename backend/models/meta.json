@@ -1,0 +1,59 @@
+{
+  "feature_cols": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall",
+    "soil_type",
+    "label"
+  ],
+  "numeric_cols": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall"
+  ],
+  "categorical_cols": [
+    "soil_type",
+    "label"
+  ],
+  "target_col": "yield_t_ha",
+  "best_model": "RandomForest",
+  "metrics": {
+    "RandomForest": {
+      "rmse": 0.0007,
+      "mae": 0.0001,
+      "r2": 1.0
+    },
+    "Ridge": {
+      "rmse": 0.0121,
+      "mae": 0.0084,
+      "r2": 0.9998
+    },
+    "XGBoost": {
+      "rmse": 0.0152,
+      "mae": 0.0042,
+      "r2": 0.9997
+    },
+    "LightGBM": {
+      "rmse": 0.0151,
+      "mae": 0.0039,
+      "r2": 0.9997
+    }
+  },
+  "crop_list": [
+    "chickpea",
+    "cotton",
+    "maize",
+    "rice"
+  ],
+  "soil_types": [
+    "loamy"
+  ]
+}

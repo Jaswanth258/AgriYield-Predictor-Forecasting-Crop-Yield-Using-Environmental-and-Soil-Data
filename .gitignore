@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+# .env # Removed by Orchids to allow .env files
+*.egg-info/
+dist/
+build/
+*.so
+*.dylib
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node / React
+node_modules/
+dist/
+.DS_Store
+*.local
+
+# ML artifacts
+backend/models/*.pkl
+backend/models/*.joblib
+backend/data/*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
