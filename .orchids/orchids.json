@@ -1,7 +1,7 @@
 {
   "startupCommands": [
     "cd /home/user/app/backend && python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip --quiet && pip install -r requirements.txt --quiet && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
-    "cd /home/user/app/frontend && npm install && npm run dev"
+    "cd /home/user/app/frontend && npm install && npm run dev -- --port 8001"
   ],
   "projectId": "c0573ba9-e607-4245-a748-e682638f6641",
   "templateId": "any"
