@@ -8,7 +8,7 @@ Start-Process "cmd.exe" -ArgumentList "/c cd frontend && npm run dev"
 
 Write-Host ""
 Write-Host "Both servers are starting up!" -ForegroundColor Green
-Write-Host "The Frontend will accessible at http://localhost:5173"
-Write-Host "The Backend API is available at http://localhost:8000"
+Write-Host "The Development Frontend is accessible at http://localhost:8001"
+Write-Host "The Production Frontend & API is accessible at http://localhost:8000"
 Write-Host ""
 Write-Host "You can safely close this window." -ForegroundColor Yellow
