@@ -13,10 +13,12 @@ export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative z-0">
+      <div className="bg-mesh"><div className="bg-mesh-center"></div></div>
+      
       {/* Top nav */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="bg-white/70 backdrop-blur-xl border-b border-white/60 sticky top-0 z-50 shadow-sm">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <span className="text-2xl">🌾</span>
@@ -63,7 +65,7 @@ export default function Layout() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-1">
+          <div className="md:hidden border-t border-white/50 bg-white/90 backdrop-blur-xl px-4 py-3 space-y-1">
             {links.map((l) => (
               <NavLink
                 key={l.to}
@@ -84,12 +86,12 @@ export default function Layout() {
         )}
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <Outlet />
       </main>
 
-      <footer className="border-t border-gray-100 bg-white mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between text-xs text-gray-400">
+      <footer className="border-t border-white/50 bg-white/40 backdrop-blur-sm mt-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between text-xs text-gray-500 font-medium">
           <span>AgriYield Predictor — ML-powered crop yield forecasting</span>
           <span>Powered by FastAPI + React + scikit-learn / XGBoost / LightGBM</span>
         </div>

@@ -3,28 +3,86 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-size: 16px;
+  }
+  @media (min-width: 1280px) { /* xl */
+    html { font-size: 18px; }
+  }
+  @media (min-width: 1536px) { /* 2xl */
+    html { font-size: 20px; }
+  }
+  @media (min-width: 1920px) { /* 3xl / 4k */
+    html { font-size: 24px; }
+  }
   body {
     @apply bg-gray-50 text-gray-900 font-sans antialiased;
   }
 }
 
 @layer components {
+  /* Premium Glassmorphism Card Engine */
   .card {
-    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6;
+    @apply bg-white/60 backdrop-blur-2xl border border-white/70 shadow-2xl shadow-brand-900/5 p-6 rounded-3xl transition-all duration-300;
   }
+  
   .btn-primary {
-    @apply bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply relative overflow-hidden bg-gradient-to-r from-brand-600 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-xl shadow-brand-500/40 hover:shadow-brand-500/60 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none;
   }
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none;
+  }
+  
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-gray-700 font-medium px-5 py-2.5 rounded-xl border border-gray-200 transition-all duration-200;
+    @apply bg-white/80 backdrop-blur-md hover:bg-white text-gray-800 font-medium px-5 py-2.5 rounded-xl border border-white/80 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5;
   }
+  
   .input-field {
-    @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent bg-white transition-all duration-200;
+    @apply w-full border border-gray-200/50 bg-white/50 backdrop-blur-sm rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent focus:bg-white transition-all duration-300 hover:bg-white/70;
   }
+  
   .label {
-    @apply block text-sm font-medium text-gray-700 mb-1.5;
+    @apply block text-sm font-semibold text-gray-800 mb-1.5 drop-shadow-sm;
   }
+  
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold shadow-sm;
   }
+}
+
+/* Magic Mesh Background Animation Engine */
+@keyframes blob1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+@keyframes blob2 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(-50px, 30px) scale(0.95); }
+  66% { transform: translate(20px, -20px) scale(1.05); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.bg-mesh {
+  @apply fixed inset-0 pointer-events-none z-[-1] overflow-hidden bg-[#f8faf9];
+}
+.bg-mesh::before, .bg-mesh::after {
+  content: "";
+  @apply absolute rounded-full opacity-[0.6] mix-blend-multiply filter blur-[100px];
+}
+.bg-mesh::before {
+  @apply bg-teal-200 w-[600px] h-[600px] top-[-10%] left-[-10%];
+  animation: blob1 10s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bg-mesh::after {
+  @apply bg-emerald-100 w-[500px] h-[500px] top-[40%] right-[-10%];
+  animation: blob2 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: -3s;
+}
+.bg-mesh-center {
+  @apply absolute rounded-full bg-blue-100/50 w-[700px] h-[700px] top-[20%] left-[30%] opacity-50 mix-blend-multiply filter blur-[120px];
+  animation: blob1 15s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: -7s;
 }

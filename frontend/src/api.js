@@ -1,14 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_URL || "/api",
   timeout: 120000, // 2 min — training can take a while on first load
 });
 
 export const getHealth = () => api.get("/health");
 export const getMeta = () => api.get("/meta");
+export const getLiveWeather = (state, district) => api.get("/live-weather", { params: { state, district } });
+export const getHistoricalReference = (state, district, crop) => api.get("/historical-reference", { params: { state, district, crop } });
 
 export const predictYield = (payload) => api.post("/predict", payload);
+export const recommendCrop = (payload) => api.post("/recommend-crop", payload);
 
 export const predictBatch = (formData) =>
   api.post("/predict/batch", formData, {

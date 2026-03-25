@@ -1,13 +1,16 @@
 feature,importance
-P,0.6651688231043447
-label_chickpea,0.03617652038086354
-N,0.004494586393534019
-K,0.003699613252303161
-rainfall,1.2065701130276237e-05
-temperature,1.0713589696843206e-05
-ph,6.157121085618467e-06
-humidity,5.90606848801083e-06
-label_cotton,1.2323695423454752e-06
-label_rice,1.2000435037716297e-06
-label_maize,1.1980102697360306e-06
-soil_type_loamy,0.0
+label_coconut,413.7792
+state_West Bengal,15.867304
+state_Karnataka,13.244882
+state_Chhattisgarh,11.626754
+state_Kerala,9.890203
+state_Assam,9.46799
+state_Goa,8.728943
+humidity,5.8286347
+temperature,5.3631005
+P,5.2947254
+state_Mizoram,4.4957542
+N,3.7351885
+state_Puducherry,3.0978937
+state_Tamil Nadu,3.0292566
+state_Andhra Pradesh,2.5317345

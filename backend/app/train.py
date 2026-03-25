@@ -60,14 +60,14 @@ def train():
     print("Loading real dataset...")
     df = get_dataset()
 
-    feature_cols = ["N", "P", "K", "temperature", "humidity", "ph", "rainfall", "soil_type", "label"]
+    feature_cols = ["state", "district", "N", "P", "K", "temperature", "humidity", "ph", "rainfall", "soil_type", "label"]
     target_col = "yield_t_ha"
 
     X = df[feature_cols].copy()
     y = df[target_col].values
 
     numeric_cols = ["N", "P", "K", "temperature", "humidity", "ph", "rainfall"]
-    categorical_cols = ["soil_type", "label"]
+    categorical_cols = ["state", "district", "soil_type", "label"]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -109,6 +109,60 @@ def train():
     joblib.dump(best_pipeline, MODELS_DIR / "best_model.pkl")
     print(f"Saved best model → models/best_model.pkl")
 
+    # Compute top crops per state
+    top_crops_per_state = {}
+    for state in df["state"].unique():
+        state_df = df[df["state"] == state]
+        top_crops = state_df["label"].value_counts().head(5).index.tolist()
+        top_crops_per_state[state] = top_crops
+
+    # ---------------------------------------------------------
+    # 1. Train Crop Recommender (Classification)
+    # ---------------------------------------------------------
+    print("\nTraining Crop Recommender (Random Forest Classifier)...")
+    from sklearn.ensemble import RandomForestClassifier
+    
+    rc_features = ["N", "P", "K", "temperature", "humidity", "ph", "rainfall"]
+    X_rc = df[rc_features]
+    y_rc = df["label"]
+    
+    rc_pipeline = Pipeline([
+        ("scaler", StandardScaler()),
+        ("clf", RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1, max_depth=10))
+    ])
+    rc_pipeline.fit(X_rc, y_rc)
+    
+    joblib.dump(rc_pipeline, MODELS_DIR / "crop_recommender.pkl")
+    print("Saved crop recommender → models/crop_recommender.pkl")
+    
+    # ---------------------------------------------------------
+    # 2. Compute Crop Benchmarks (Yield Enhancement)
+    # ---------------------------------------------------------
+    print("\nComputing Crop Benchmarks...")
+    crop_benchmarks = {}
+    for crop in df["label"].unique():
+        crop_df = df[df["label"] == crop]
+        median_yield = float(crop_df["yield_t_ha"].median())
+        
+        # Optimal N, P, K from top 20% yielding samples
+        crop_data = df[df["label"] == crop]
+        if len(crop_data) > 0:
+            top_quarter = crop_data[crop_data["yield_t_ha"] >= crop_data["yield_t_ha"].quantile(0.75)]
+            if len(top_quarter) == 0:
+                top_quarter = crop_data
+                
+            crop_benchmarks[crop] = {
+                "median_yield": round(crop_data["yield_t_ha"].median(), 3),
+                "top_yield": round(top_quarter["yield_t_ha"].median(), 3),
+                "optimal_N": round(top_quarter["N"].median(), 1),
+                "optimal_P": round(top_quarter["P"].median(), 1),
+                "optimal_K": round(top_quarter["K"].median(), 1),
+                "optimal_temp": round(top_quarter["temperature"].median(), 1),
+                "optimal_humidity": round(top_quarter["humidity"].median(), 1),
+                "optimal_ph": round(top_quarter["ph"].median(), 2),
+                "optimal_rainfall": round(top_quarter["rainfall"].median(), 0),
+            }
+
     # Save feature column info
     meta = {
         "feature_cols": feature_cols,
@@ -119,6 +173,10 @@ def train():
         "metrics": all_metrics,
         "crop_list": sorted(df["label"].unique().tolist()),
         "soil_types": sorted(df["soil_type"].unique().tolist()),
+        "state_list": sorted(df["state"].unique().tolist()),
+        "region_hierarchy": {state: sorted(df[df.state == state]["district"].unique().tolist()) for state in df["state"].unique()},
+        "top_crops": top_crops_per_state,
+        "crop_benchmarks": crop_benchmarks,
     }
     with open(MODELS_DIR / "meta.json", "w") as f:
         json.dump(meta, f, indent=2)

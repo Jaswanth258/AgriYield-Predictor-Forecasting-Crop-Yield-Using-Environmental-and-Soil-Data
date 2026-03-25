@@ -31,17 +31,15 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 
 def _ph_to_soil_type(ph: float) -> str:
     if ph < 5.5:
-        return "peaty"
-    elif ph < 6.0:
-        return "sandy"
-    elif ph < 6.8:
-        return "loamy"
+        return "laterite"
+    elif ph < 6.5:
+        return "red"
     elif ph < 7.5:
-        return "silty"
+        return "alluvial"
     elif ph < 8.0:
-        return "chalky"
+        return "black"
     else:
-        return "clay"
+        return "arid"
 
 
 # ---------------------------------------------------------------------------
@@ -51,23 +49,13 @@ def _ph_to_soil_type(ph: float) -> str:
 def _load_crop_yield() -> pd.DataFrame:
     df = pd.read_csv(DATA_DIR / "crop_yield.csv")
     df.columns = df.columns.str.strip()
-    df = df.rename(columns={
-        "State Name":      "state",
-        "Dist Name":       "district",
-        "Crop":            "label",
-        "Area_ha":         "area_ha",
-        "Yield_kg_per_ha": "yield_kg_ha",
-        "N_req_kg_per_ha": "N",
-        "P_req_kg_per_ha": "P",
-        "K_req_kg_per_ha": "K",
-        "Temperature_C":   "temperature",
-        "Humidity_%":      "humidity",
-        "pH":              "ph",
-        "Rainfall_mm":     "rainfall",
-        "Year":            "year",
-    })
-    df["label"] = df["label"].str.strip().str.lower()
-    df["state"] = df["state"].str.strip()
+    
+    # Capitalize state and district cleanly just in case
+    if "state" in df.columns:
+        df["state"] = df["state"].str.strip()
+    if "label" in df.columns:
+        df["label"] = df["label"].astype(str).str.strip().str.lower()
+        
     return df
 
 
@@ -100,13 +88,16 @@ def build_dataset() -> pd.DataFrame:
     wx   = _load_state_weather()
     soil = _load_state_soil()
 
-    # 1. Merge actual observed weather (1997–2020) where available
+    # 1. Merge actual observed weather (1997–2020) where available as fallback
     df = df.merge(wx, on=["state", "year"], how="left")
     # Cast to float before assignment to avoid pandas dtype incompatibility
     for base, wx_col in [("temperature", "wx_temp"), ("rainfall", "wx_rainfall"), ("humidity", "wx_humidity")]:
         df[base] = df[base].astype(float)
-        has = df[wx_col].notna()
-        df.loc[has, base] = df.loc[has, wx_col].values
+        # Only override if district-level weather is missing or zero
+        needs_fallback = df[base].isna() | (df[base] == 0)
+        has_fallback = df[wx_col].notna()
+        mask = needs_fallback & has_fallback
+        df.loc[mask, base] = df.loc[mask, wx_col].values
     df.drop(columns=["wx_temp", "wx_rainfall", "wx_humidity"], inplace=True)
 
     # 2. Merge state soil baselines as fallback
@@ -117,8 +108,10 @@ def build_dataset() -> pd.DataFrame:
         df.loc[mask, col] = df.loc[mask, scol].values
     df.drop(columns=["soil_N", "soil_P", "soil_K", "soil_ph"], inplace=True)
 
-    # 3. Convert yield kg/ha → t/ha
-    df["yield_t_ha"] = (df["yield_kg_ha"] / 1000).round(4)
+    # 3. Yield conversion removed because data is already yield_t_ha
+
+    # Ensure rainfall is scaled to mm (as raw data is likely cm/monthly) to match frontend defaults.
+    df["rainfall"] = df["rainfall"] * 10.0
 
     # 4. Derive soil_type from pH
     df["soil_type"] = df["ph"].apply(_ph_to_soil_type)
@@ -128,9 +121,9 @@ def build_dataset() -> pd.DataFrame:
                 "rainfall", "soil_type", "label", "yield_t_ha"]
     df = df.dropna(subset=required)
 
-    # 6. Remove extreme outliers per crop (cap at 99th percentile, floor at 10 kg/ha)
-    uppers = df.groupby("label")["yield_t_ha"].transform("quantile", 0.99)
-    df = df[(df["yield_t_ha"] >= 0.01) & (df["yield_t_ha"] <= uppers)].reset_index(drop=True)
+    # 6. Remove extreme outliers per crop (cap at 99.5th percentile, allow 0 t/ha)
+    uppers = df.groupby("label")["yield_t_ha"].transform("quantile", 0.995)
+    df = df[(df["yield_t_ha"] >= 0) & (df["yield_t_ha"] <= uppers)].reset_index(drop=True)
 
     # 7. Keep only useful columns
     keep = ["year", "state", "district", "label", "area_ha",

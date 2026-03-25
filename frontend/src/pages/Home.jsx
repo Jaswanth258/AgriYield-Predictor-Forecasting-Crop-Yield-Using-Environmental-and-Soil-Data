@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getHealth, getMeta } from "../api";
 import StatCard from "../components/StatCard";
 import Loader from "../components/Loader";
+import EmptyStateCarousel from "../components/EmptyStateCarousel";
 
 export default function Home() {
   const [health, setHealth] = useState(null);
@@ -22,8 +23,8 @@ export default function Home() {
   return (
     <div className="space-y-8">
       {/* Hero */}
-      <div className="relative overflow-hidden card bg-gradient-to-br from-brand-600 to-brand-800 text-white border-0">
-        <div className="absolute right-0 top-0 opacity-10 text-[200px] leading-none select-none pointer-events-none">🌾</div>
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-700 to-teal-900 text-white border-0 shadow-xl shadow-brand-900/10 p-10 md:p-14">
+        <div className="absolute right-[-5%] top-[-10%] opacity-10 text-[250px] leading-none select-none pointer-events-none transform rotate-12 filter blur-[2px]">🌾</div>
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
             <span className={`w-2.5 h-2.5 rounded-full ${health?.model_ready ? "bg-green-300 animate-pulse" : "bg-red-300"}`} />
@@ -36,11 +37,11 @@ export default function Home() {
             Forecast crop yield based on soil nutrients, weather conditions, and environmental parameters
             using machine learning — powered by Random Forest, XGBoost, and LightGBM.
           </p>
-          <div className="flex flex-wrap gap-3 mt-6">
-            <Link to="/predict" className="bg-white text-brand-700 hover:bg-brand-50 font-semibold px-6 py-3 rounded-xl transition-all shadow hover:shadow-md">
-              🌾 Predict Yield
+          <div className="flex flex-wrap gap-4 mt-8">
+            <Link to="/predict" className="bg-white text-teal-700 hover:bg-emerald-50 font-bold px-8 py-4 rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg">
+              ✨ Predict Yield
             </Link>
-            <Link to="/eda" className="bg-brand-700 hover:bg-brand-900 text-white font-semibold px-6 py-3 rounded-xl transition-all border border-brand-500">
+            <Link to="/eda" className="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white font-bold px-8 py-4 rounded-xl transition-all border border-white/30 text-lg">
               📈 Explore Data
             </Link>
           </div>
@@ -56,6 +57,12 @@ export default function Home() {
           <StatCard icon="🧪" label="Features" value={meta.feature_cols?.length ?? "—"} sub="input parameters" color="purple" />
         </div>
       )}
+
+      {/* Impressive AI Explanation Carousel */}
+      <div>
+        <h2 className="text-2xl font-bold mb-5 text-gray-800 tracking-tight">How the AI Works</h2>
+        <EmptyStateCarousel />
+      </div>
 
       {/* Feature cards */}
       <div>

@@ -1,5 +1,7 @@
 {
   "feature_cols": [
+    "state",
+    "district",
     "N",
     "P",
     "K",
@@ -20,40 +22,714 @@
     "rainfall"
   ],
   "categorical_cols": [
+    "state",
+    "district",
     "soil_type",
     "label"
   ],
   "target_col": "yield_t_ha",
-  "best_model": "RandomForest",
+  "best_model": "XGBoost",
   "metrics": {
     "RandomForest": {
-      "rmse": 0.0007,
-      "mae": 0.0001,
-      "r2": 1.0
+      "rmse": 519.7969,
+      "mae": 53.6429,
+      "r2": 0.8824
     },
     "Ridge": {
-      "rmse": 0.0121,
-      "mae": 0.0084,
-      "r2": 0.9998
+      "rmse": 581.3139,
+      "mae": 169.7435,
+      "r2": 0.8529
     },
     "XGBoost": {
-      "rmse": 0.0152,
-      "mae": 0.0042,
-      "r2": 0.9997
+      "rmse": 376.7613,
+      "mae": 42.8841,
+      "r2": 0.9382
     },
     "LightGBM": {
-      "rmse": 0.0151,
-      "mae": 0.0039,
-      "r2": 0.9997
+      "rmse": 503.096,
+      "mae": 78.5338,
+      "r2": 0.8898
     }
   },
   "crop_list": [
+    "banana",
+    "blackgram",
     "chickpea",
+    "coconut",
     "cotton",
+    "jute",
+    "kidneybeans",
+    "lentil",
     "maize",
+    "mothbeans",
+    "mungbean",
+    "pigeonpeas",
     "rice"
   ],
   "soil_types": [
-    "loamy"
-  ]
+    "alluvial",
+    "arid",
+    "black",
+    "laterite",
+    "red"
+  ],
+  "state_list": [
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Delhi",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jammu And Kashmir",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Puducherry",
+    "Punjab",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal"
+  ],
+  "region_hierarchy": {
+    "Assam": [
+      "Baksa",
+      "Barpeta",
+      "Biswanath",
+      "Bongaigaon",
+      "Cachar",
+      "Dhubri",
+      "Dibrugarh"
+    ],
+    "Karnataka": [
+      "Bagalkot",
+      "Ballari",
+      "Belagavi",
+      "Bengaluru",
+      "Bidar",
+      "Chamarajanagar",
+      "Mysuru"
+    ],
+    "Kerala": [
+      "Alappuzha",
+      "Ernakulam",
+      "Idukki",
+      "Kannur",
+      "Kasaragod",
+      "Kollam",
+      "Kottayam",
+      "Wayanad"
+    ],
+    "Meghalaya": [
+      "East Garo Hills",
+      "East Jaintia Hills",
+      "East Khasi Hills",
+      "West Garo Hills"
+    ],
+    "West Bengal": [
+      "Alipurduar",
+      "Bankura",
+      "Birbhum",
+      "Darjeeling",
+      "Hooghly",
+      "Howrah",
+      "Kolkata",
+      "Nadia"
+    ],
+    "Puducherry": [
+      "Ahmednagar",
+      "Akola",
+      "Amravati",
+      "Aurangabad",
+      "Beed",
+      "Kolhapur",
+      "Mumbai",
+      "Nashik",
+      "Pune"
+    ],
+    "Goa": [
+      "North Goa",
+      "South Goa"
+    ],
+    "Andhra Pradesh": [
+      "Anantapur",
+      "Chittoor",
+      "East Godavari",
+      "Guntur",
+      "Krishna",
+      "Kurnool"
+    ],
+    "Tamil Nadu": [
+      "Chennai",
+      "Coimbatore",
+      "Cuddalore",
+      "Dharmapuri",
+      "Dindigul",
+      "Madurai",
+      "Salem",
+      "Vellore"
+    ],
+    "Odisha": [
+      "Angul",
+      "Balangir",
+      "Balasore",
+      "Bargarh",
+      "Bhadrak",
+      "Cuttack",
+      "Khordha",
+      "Puri"
+    ],
+    "Bihar": [
+      "Aurangabad",
+      "Bhagalpur",
+      "Darbhanga",
+      "Gaya",
+      "Muzaffarpur",
+      "Patna",
+      "Purnia"
+    ],
+    "Gujarat": [
+      "Ahmedabad",
+      "Amreli",
+      "Anand",
+      "Banaskantha",
+      "Bharuch",
+      "Bhavnagar",
+      "Surat",
+      "Vadodara"
+    ],
+    "Madhya Pradesh": [
+      "Bhopal",
+      "Gwalior",
+      "Indore",
+      "Jabalpur",
+      "Rewa",
+      "Sagar",
+      "Ujjain"
+    ],
+    "Maharashtra": [
+      "Ahmednagar",
+      "Akola",
+      "Amravati",
+      "Aurangabad",
+      "Beed",
+      "Kolhapur",
+      "Mumbai",
+      "Nashik",
+      "Pune"
+    ],
+    "Mizoram": [
+      "Aizawl",
+      "Champhai",
+      "Kolasib",
+      "Lawngtlai",
+      "Lunglei",
+      "Mamit",
+      "Saiha"
+    ],
+    "Punjab": [
+      "Amritsar",
+      "Barnala",
+      "Bathinda",
+      "Faridkot",
+      "Jalandhar",
+      "Ludhiana",
+      "Patiala"
+    ],
+    "Uttar Pradesh": [
+      "Agra",
+      "Aligarh",
+      "Gorakhpur",
+      "Kanpur",
+      "Lucknow",
+      "Meerut",
+      "Prayagraj",
+      "Varanasi"
+    ],
+    "Haryana": [
+      "Ambala",
+      "Bhiwani",
+      "Faridabad",
+      "Gurugram",
+      "Hisar",
+      "Karnal",
+      "Panipat",
+      "Rohtak"
+    ],
+    "Himachal Pradesh": [
+      "Bilaspur",
+      "Chamba",
+      "Hamirpur",
+      "Kangra",
+      "Kinnaur",
+      "Kullu",
+      "Mandi",
+      "Shimla"
+    ],
+    "Tripura": [
+      "Dhalai",
+      "Gomati",
+      "Khowai",
+      "North Tripura",
+      "Sepahijala",
+      "South Tripura",
+      "Unakoti"
+    ],
+    "Nagaland": [
+      "Dimapur",
+      "Kiphire",
+      "Kohima",
+      "Longleng",
+      "Mokokchung",
+      "Mon",
+      "Peren",
+      "Tuensang"
+    ],
+    "Chhattisgarh": [
+      "Bastar",
+      "Bijapur",
+      "Bilaspur",
+      "Dantewada",
+      "Durg",
+      "Raigarh",
+      "Raipur"
+    ],
+    "Uttarakhand": [
+      "Almora",
+      "Bageshwar",
+      "Chamoli",
+      "Dehradun",
+      "Haridwar",
+      "Nainital",
+      "Pauri Garhwal"
+    ],
+    "Jharkhand": [
+      "Bokaro",
+      "Chatra",
+      "Deoghar",
+      "Dhanbad",
+      "Dumka",
+      "Garhwa",
+      "Giridih",
+      "Ranchi"
+    ],
+    "Delhi": [
+      "Ahmednagar",
+      "Akola",
+      "Amravati",
+      "Aurangabad",
+      "Beed",
+      "Kolhapur",
+      "Mumbai",
+      "Nashik",
+      "Pune"
+    ],
+    "Manipur": [
+      "Bishnupur",
+      "Chandel",
+      "Churachandpur",
+      "Imphal East",
+      "Imphal West",
+      "Senapati"
+    ],
+    "Jammu And Kashmir": [
+      "Ahmednagar",
+      "Akola",
+      "Amravati",
+      "Aurangabad",
+      "Beed",
+      "Kolhapur",
+      "Mumbai",
+      "Nashik",
+      "Pune"
+    ],
+    "Telangana": [
+      "Adilabad",
+      "Hyderabad",
+      "Jagtial",
+      "Karimnagar",
+      "Khammam",
+      "Nizamabad",
+      "Warangal"
+    ],
+    "Arunachal Pradesh": [
+      "East Kameng",
+      "Papum Pare",
+      "Tawang",
+      "West Kameng"
+    ],
+    "Sikkim": [
+      "East Sikkim",
+      "North Sikkim",
+      "South Sikkim",
+      "West Sikkim"
+    ]
+  },
+  "top_crops": {
+    "Assam": [
+      "rice",
+      "pigeonpeas",
+      "cotton",
+      "chickpea",
+      "jute"
+    ],
+    "Karnataka": [
+      "maize",
+      "rice",
+      "mungbean",
+      "blackgram",
+      "cotton"
+    ],
+    "Kerala": [
+      "rice",
+      "coconut",
+      "banana",
+      "cotton",
+      "pigeonpeas"
+    ],
+    "Meghalaya": [
+      "rice",
+      "cotton",
+      "chickpea",
+      "jute",
+      "maize"
+    ],
+    "West Bengal": [
+      "mungbean",
+      "rice",
+      "maize",
+      "blackgram",
+      "coconut"
+    ],
+    "Puducherry": [
+      "rice",
+      "blackgram",
+      "mungbean",
+      "cotton",
+      "banana"
+    ],
+    "Goa": [
+      "rice",
+      "coconut",
+      "banana"
+    ],
+    "Andhra Pradesh": [
+      "maize",
+      "mungbean",
+      "rice",
+      "blackgram",
+      "pigeonpeas"
+    ],
+    "Tamil Nadu": [
+      "cotton",
+      "maize",
+      "mungbean",
+      "blackgram",
+      "rice"
+    ],
+    "Odisha": [
+      "maize",
+      "blackgram",
+      "rice",
+      "mungbean",
+      "jute"
+    ],
+    "Bihar": [
+      "maize",
+      "rice",
+      "mungbean",
+      "pigeonpeas",
+      "chickpea"
+    ],
+    "Gujarat": [
+      "maize",
+      "rice",
+      "mungbean",
+      "blackgram",
+      "pigeonpeas"
+    ],
+    "Madhya Pradesh": [
+      "blackgram",
+      "maize",
+      "rice",
+      "mungbean",
+      "pigeonpeas"
+    ],
+    "Maharashtra": [
+      "maize",
+      "rice",
+      "mungbean",
+      "pigeonpeas",
+      "chickpea"
+    ],
+    "Mizoram": [
+      "rice",
+      "maize",
+      "pigeonpeas",
+      "cotton",
+      "lentil"
+    ],
+    "Punjab": [
+      "mungbean",
+      "pigeonpeas",
+      "cotton",
+      "chickpea",
+      "maize"
+    ],
+    "Uttar Pradesh": [
+      "maize",
+      "rice",
+      "mungbean",
+      "blackgram",
+      "chickpea"
+    ],
+    "Haryana": [
+      "kidneybeans",
+      "chickpea",
+      "cotton",
+      "maize",
+      "rice"
+    ],
+    "Himachal Pradesh": [
+      "kidneybeans",
+      "maize",
+      "rice",
+      "pigeonpeas",
+      "chickpea"
+    ],
+    "Tripura": [
+      "mungbean",
+      "rice",
+      "blackgram",
+      "maize",
+      "cotton"
+    ],
+    "Nagaland": [
+      "rice",
+      "maize",
+      "kidneybeans",
+      "jute",
+      "pigeonpeas"
+    ],
+    "Chhattisgarh": [
+      "mungbean",
+      "blackgram",
+      "maize",
+      "pigeonpeas",
+      "cotton"
+    ],
+    "Uttarakhand": [
+      "maize",
+      "rice",
+      "blackgram",
+      "mungbean",
+      "pigeonpeas"
+    ],
+    "Jharkhand": [
+      "rice",
+      "maize",
+      "pigeonpeas",
+      "chickpea",
+      "lentil"
+    ],
+    "Delhi": [
+      "rice",
+      "chickpea",
+      "maize",
+      "cotton",
+      "pigeonpeas"
+    ],
+    "Manipur": [
+      "maize",
+      "banana",
+      "kidneybeans",
+      "rice",
+      "pigeonpeas"
+    ],
+    "Jammu And Kashmir": [
+      "kidneybeans",
+      "lentil",
+      "blackgram",
+      "mungbean",
+      "maize"
+    ],
+    "Telangana": [
+      "pigeonpeas",
+      "maize",
+      "rice",
+      "blackgram",
+      "mungbean"
+    ],
+    "Arunachal Pradesh": [
+      "maize",
+      "rice",
+      "kidneybeans",
+      "blackgram",
+      "pigeonpeas"
+    ],
+    "Sikkim": [
+      "maize",
+      "blackgram",
+      "rice"
+    ]
+  },
+  "crop_benchmarks": {
+    "pigeonpeas": {
+      "median_yield": 0.778,
+      "top_yield": 1.193,
+      "optimal_N": 20.4,
+      "optimal_P": 68.5,
+      "optimal_K": 21.1,
+      "optimal_temp": 27.9,
+      "optimal_humidity": 48.4,
+      "optimal_ph": 5.78,
+      "optimal_rainfall": 1477.0
+    },
+    "coconut": {
+      "median_yield": 8446.091,
+      "top_yield": 12630.527,
+      "optimal_N": 22.5,
+      "optimal_P": 15.8,
+      "optimal_K": 29.7,
+      "optimal_temp": 27.8,
+      "optimal_humidity": 95.6,
+      "optimal_ph": 5.93,
+      "optimal_rainfall": 1768.0
+    },
+    "cotton": {
+      "median_yield": 1.42,
+      "top_yield": 2.897,
+      "optimal_N": 118.1,
+      "optimal_P": 46.5,
+      "optimal_K": 19.4,
+      "optimal_temp": 24.0,
+      "optimal_humidity": 79.6,
+      "optimal_ph": 6.92,
+      "optimal_rainfall": 823.0
+    },
+    "chickpea": {
+      "median_yield": 0.818,
+      "top_yield": 1.232,
+      "optimal_N": 39.6,
+      "optimal_P": 67.8,
+      "optimal_K": 80.1,
+      "optimal_temp": 18.9,
+      "optimal_humidity": 17.3,
+      "optimal_ph": 7.34,
+      "optimal_rainfall": 833.0
+    },
+    "jute": {
+      "median_yield": 8.146,
+      "top_yield": 14.035,
+      "optimal_N": 78.3,
+      "optimal_P": 47.4,
+      "optimal_K": 40.0,
+      "optimal_temp": 24.7,
+      "optimal_humidity": 79.3,
+      "optimal_ph": 6.77,
+      "optimal_rainfall": 1753.0
+    },
+    "maize": {
+      "median_yield": 1.951,
+      "top_yield": 3.531,
+      "optimal_N": 77.6,
+      "optimal_P": 48.6,
+      "optimal_K": 20.0,
+      "optimal_temp": 22.4,
+      "optimal_humidity": 65.3,
+      "optimal_ph": 6.24,
+      "optimal_rainfall": 849.0
+    },
+    "rice": {
+      "median_yield": 2.202,
+      "top_yield": 3.048,
+      "optimal_N": 80.0,
+      "optimal_P": 47.4,
+      "optimal_K": 39.5,
+      "optimal_temp": 23.8,
+      "optimal_humidity": 82.0,
+      "optimal_ph": 6.45,
+      "optimal_rainfall": 2351.0
+    },
+    "banana": {
+      "median_yield": 17.86,
+      "top_yield": 48.413,
+      "optimal_N": 99.6,
+      "optimal_P": 81.1,
+      "optimal_K": 50.2,
+      "optimal_temp": 26.8,
+      "optimal_humidity": 80.7,
+      "optimal_ph": 5.92,
+      "optimal_rainfall": 1057.0
+    },
+    "lentil": {
+      "median_yield": 0.704,
+      "top_yield": 0.924,
+      "optimal_N": 19.5,
+      "optimal_P": 68.2,
+      "optimal_K": 19.7,
+      "optimal_temp": 24.6,
+      "optimal_humidity": 64.6,
+      "optimal_ph": 6.93,
+      "optimal_rainfall": 531.0
+    },
+    "mungbean": {
+      "median_yield": 0.51,
+      "top_yield": 0.813,
+      "optimal_N": 20.9,
+      "optimal_P": 46.7,
+      "optimal_K": 20.0,
+      "optimal_temp": 28.5,
+      "optimal_humidity": 85.5,
+      "optimal_ph": 6.74,
+      "optimal_rainfall": 497.0
+    },
+    "blackgram": {
+      "median_yield": 0.567,
+      "top_yield": 0.838,
+      "optimal_N": 40.0,
+      "optimal_P": 67.1,
+      "optimal_K": 19.4,
+      "optimal_temp": 29.9,
+      "optimal_humidity": 65.5,
+      "optimal_ph": 7.12,
+      "optimal_rainfall": 664.0
+    },
+    "kidneybeans": {
+      "median_yield": 0.932,
+      "top_yield": 1.562,
+      "optimal_N": 20.9,
+      "optimal_P": 67.2,
+      "optimal_K": 20.3,
+      "optimal_temp": 20.6,
+      "optimal_humidity": 20.3,
+      "optimal_ph": 5.7,
+      "optimal_rainfall": 1102.0
+    },
+    "mothbeans": {
+      "median_yield": 0.433,
+      "top_yield": 0.738,
+      "optimal_N": 22.1,
+      "optimal_P": 45.9,
+      "optimal_K": 19.6,
+      "optimal_temp": 28.9,
+      "optimal_humidity": 50.9,
+      "optimal_ph": 6.87,
+      "optimal_rainfall": 571.0
+    }
+  }
 }
