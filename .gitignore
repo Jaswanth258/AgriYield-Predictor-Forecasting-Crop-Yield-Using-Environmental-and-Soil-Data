@@ -22,10 +22,10 @@ dist/
 .DS_Store
 *.local
 
-# ML artifacts
-backend/models/*.pkl
-backend/models/*.joblib
-backend/data/*.csv
+# ML artifacts (Uncommented for free-tier deploy)
+# backend/models/*.pkl
+# backend/models/*.joblib
+# backend/data/*.csv
 
 # IDE
 .vscode/
