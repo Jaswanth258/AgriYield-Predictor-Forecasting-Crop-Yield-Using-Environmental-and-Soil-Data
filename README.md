@@ -6,6 +6,8 @@
 
 An advanced artificial intelligence web application engineered to predict crop yields with pinpoint accuracy using extreme-gradient boosting models (XGBoost). The system leverages microclimate inputs (temperature, rainfall, pH) and deep sub-soil elements (Nitrogen, Phosphorous, Potassium) to deliver data-led agricultural recommendations.
 
+### 🌍 **Live Application Demo:** [https://agriyield-predictor-forecasting-crop.onrender.com](https://agriyield-predictor-forecasting-crop.onrender.com)
+
 ## 🎯 Core Features & Capabilities
 
 ### 1. Highly-Calibrated AI Predictions
