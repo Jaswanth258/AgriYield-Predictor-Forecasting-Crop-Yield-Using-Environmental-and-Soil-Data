@@ -241,9 +241,19 @@ export default function Predict() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-extrabold">Crop Yield Prediction</h1>
-        <p className="text-gray-500 mt-1">Enter soil and environmental parameters to predict yield.</p>
+      {/* Page header with crop imagery */}
+      <div className="relative overflow-hidden rounded-2xl h-36 shadow-lg">
+        <img
+          src="/images/hero_wheat.png"
+          alt="Crop field"
+          className="w-full h-full object-cover object-center"
+          onError={(e) => { e.target.style.display = "none"; e.target.parentElement.classList.add("bg-gradient-to-r", "from-brand-700", "to-teal-800"); }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-900/85 via-teal-900/60 to-transparent" />
+        <div className="absolute inset-0 flex flex-col justify-center px-8">
+          <h1 className="text-3xl font-extrabold text-white drop-shadow">Crop Yield Prediction</h1>
+          <p className="text-teal-200 mt-1 text-sm">Enter soil and environmental parameters to predict yield.</p>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-5 gap-6">

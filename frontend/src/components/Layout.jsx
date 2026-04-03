@@ -1,8 +1,8 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, Link } from "react-router-dom";
 import { useState } from "react";
 
 const links = [
-  { to: "/", label: "Home", icon: "🏠" },
+  { to: "/home", label: "Home", icon: "🏠" },
   { to: "/predict", label: "Predict", icon: "🌾" },
   { to: "/batch", label: "Batch", icon: "📊" },
   { to: "/eda", label: "Analysis", icon: "📈" },
@@ -21,6 +21,8 @@ export default function Layout() {
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
+              <Link to="/" className="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors hidden sm:block">← Landing</Link>
+              <div className="w-px h-4 bg-gray-200 hidden sm:block" />
               <span className="text-2xl">🌾</span>
               <div>
                 <span className="font-bold text-brand-700 text-lg leading-none">AgriYield</span>
