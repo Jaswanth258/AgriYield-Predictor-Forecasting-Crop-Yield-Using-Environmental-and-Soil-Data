@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriYield Predictor Presentation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0B1120; overflow: hidden; }
+        .glass-panel { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; display: flex; flex-direction: column; transform: scale(0.95); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .slide.active { opacity: 1; visibility: visible; transform: scale(1); z-index: 10; }
+        .glow { position: absolute; border-radius: 50%; filter: blur(100px); z-index: 0; opacity: 0.3; }
+        #notes-panel { transition: transform 0.3s ease-in-out; transform: translateY(100%); }
+        #notes-panel.open { transform: translateY(0); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+    </style>
+</head>
+<body class="text-slate-200 h-screen w-screen flex flex-col font-sans relative">
+
+    <div class="glow bg-emerald-500 top-[-10%] left-[-10%] w-[40vw] h-[40vw]"></div>
+    <div class="glow bg-blue-500 bottom-[-10%] right-[-10%] w-[50vw] h-[50vw]"></div>
+
+    <main class="relative z-10 flex-1 w-full max-w-7xl mx-auto p-4 sm:p-6 md:p-8 lg:p-12 overflow-hidden flex flex-col">
+        <div id="slides-container" class="relative flex-1 w-full h-full glass-panel rounded-3xl p-6 sm:p-8 md:p-12 overflow-y-auto overflow-x-hidden">
+
+            <!-- Slide 1 -->
+            <div class="slide active items-center justify-center text-center">
+                <span class="px-4 py-1.5 mb-8 text-sm font-bold tracking-widest text-emerald-400 uppercase border border-emerald-500/30 rounded-full bg-emerald-500/10 inline-block">Slide 1</span>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6 leading-tight">AgriYield Predictor</h1>
+                <h2 class="text-xl sm:text-3xl md:text-4xl font-medium text-slate-300 mb-8 max-w-4xl mx-auto leading-snug">Advanced Crop Forecasting & Agricultural Optimization</h2>
+                <div class="mt-8 text-base sm:text-lg text-slate-400 space-y-2">
+                    <p>Presenter: <span class="text-white font-semibold">Jaswanth Yadav</span></p>
+                    <p>Date: <span class="text-white">2026</span></p>
+                </div>
+                <div class="hidden notes">"Hello everyone. Welcome to the AgriYield Predictor. Instead of just a simple calculator, this project is a multi-model Artificial Intelligence web application designed to forecast crop yields with pinpoint accuracy, recommend crops, and mathematically optimize farm inputs."</div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-4 sm:mb-8">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 2</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold">Project Overview</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center pb-4">
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 h-full flex flex-col justify-center">
+                        <div class="text-5xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold text-emerald-400 mb-2">Objective</h3>
+                        <p class="text-lg text-slate-300 leading-relaxed">Predict crop yield and massively enhance farm output using microclimate tracking maps and deep localized soil metrics.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 h-full flex flex-col justify-center">
+                        <div class="text-5xl mb-4">⚙️</div>
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-2">Key AI Capabilities</h3>
+                        <ul class="text-lg text-slate-300 leading-relaxed space-y-2">
+                            <li>→ Predict exact tonnes-per-hectare (t/ha).</li>
+                            <li>→ Recommend the absolute best crop for current soil situations.</li>
+                            <li>→ "Auto-Optimize" NPK inputs to mimic the top 25% global farms.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 3</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Dataset Structure & Architecture</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-full items-center">
+                    <div class="md:col-span-7 flex flex-col gap-6">
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
+                            <p class="text-2xl font-bold text-emerald-400">Merged Architecture:</p>
+                            <p class="text-lg text-slate-300 mt-2">Combined raw Crop Yield, Geographic, and Meteorological sets into an ultimate single dataset (~17,000 Rows).</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
+                            <h3 class="text-2xl font-bold text-white mb-4">11 Core Input Features</h3>
+                            <ul class="space-y-3 text-lg font-medium text-slate-300">
+                                <li class="flex border-b border-slate-700/50 pb-2"><span class="w-1/3 text-emerald-400 font-bold">🗺️ Location</span> State, District</li>
+                                <li class="flex border-b border-slate-700/50 pb-2"><span class="w-1/3 text-amber-500 font-bold">🌱 Soil</span> N, P, K, pH Level, Soil Type</li>
+                                <li class="flex border-b border-slate-700/50 pb-2"><span class="w-1/3 text-blue-400 font-bold">🌦️ Weather</span> Temperature, Rainfall, Humidity</li>
+                                <li class="flex"><span class="w-1/3 text-cyan-400 font-bold">🌾 Identifier</span> Crop Label</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:col-span-5 bg-emerald-900/20 border-2 border-emerald-500/50 rounded-2xl p-8 text-center h-full flex flex-col justify-center shadow-lg">
+                        <h3 class="text-2xl text-white mb-6 font-semibold">Target Variable Prediction</h3>
+                        <div class="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-emerald-600 mb-2">Yield</div>
+                        <div class="text-2xl text-emerald-500/80 font-bold">(t / ha)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide flex flex-col">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 4</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Key EDA Insights</h2>
+                </div>
+                <div class="flex flex-col justify-center h-full gap-8">
+                    <div class="flex items-start bg-slate-800/50 p-6 md:p-8 rounded-2xl border-l-4 border-emerald-500 border-r border-t border-b border-slate-700/50">
+                        <div class="text-4xl text-emerald-400 mr-6 mt-1">🔬</div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-white mb-2">Deep Chemical Dependencies</h4>
+                            <p class="text-xl text-slate-300">Farm yields drastically fluctuate based on exact NPK ratios matching correctly with specific regional soil types.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start bg-slate-800/50 p-6 md:p-8 rounded-2xl border-l-4 border-blue-500 border-r border-t border-b border-slate-700/50">
+                        <div class="text-4xl text-blue-400 mr-6 mt-1">📉</div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-white mb-2">Non-Linear Climate Shock</h4>
+                            <p class="text-xl text-slate-300">Extreme weather dependencies (droughts vs floods) cause highly non-linear output graphs, completely breaking simple linear regression capabilities.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start bg-slate-800/50 p-6 md:p-8 rounded-2xl border-l-4 border-amber-500 border-r border-t border-b border-slate-700/50">
+                        <div class="text-4xl text-amber-500 mr-6 mt-1">🌟</div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-white mb-2">The "Top 20%" Stratification</h4>
+                            <p class="text-xl text-slate-300">Historical top-performing farms operate significantly differently from the median, implying "optimal" inputs are entirely calculable.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 5</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Methodology & AI Pipeline</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-full mt-4">
+                    <div class="bg-slate-900/40 p-8 rounded-3xl border border-slate-700 shadow-xl">
+                        <div class="text-4xl text-cyan-400 mb-4">01</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Custom Preprocessing</h3>
+                        <p class="text-lg text-slate-400">Strict OneHotEncoding for categories and StandardScaling for massive numeric variance (like Rainfall mapping vs pH levels).</p>
+                    </div>
+                    <div class="bg-slate-900/40 p-8 rounded-3xl border border-slate-700 shadow-xl border-t-4 border-t-emerald-500">
+                        <div class="text-4xl text-emerald-400 mb-4">02</div>
+                        <h3 class="text-2xl font-bold text-emerald-400 mb-3">Multi-Model Architecture</h3>
+                        <p class="text-lg text-slate-300">Training both a classification engine (to strictly recommend crops) AND an overarching regression engine (to forecast exact yields).</p>
+                    </div>
+                    <div class="bg-slate-900/40 p-8 rounded-3xl border border-slate-700 shadow-xl">
+                        <div class="text-4xl text-purple-400 mb-4">03</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">SHAP Analytics</h3>
+                        <p class="text-lg text-slate-400">Implementing SHAP tree explanations for deep feature importance tracking to prevent "black box" syndrome.</p>
+                    </div>
+                    <div class="bg-slate-900/40 p-8 rounded-3xl border border-slate-700 shadow-xl">
+                        <div class="text-4xl text-blue-400 mb-4">04</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Advanced API Fallbacks</h3>
+                        <p class="text-lg text-slate-400">Fallback architectures parsing Open-Meteo systems for live, localized geographical weather data upon user interaction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 6</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Data Preprocessing Breakdown</h2>
+                </div>
+                <div class="flex flex-col gap-6 justify-center h-full max-w-5xl mx-auto w-full">
+                    <div class="bg-slate-800/80 border border-slate-600 rounded-2xl p-8 flex gap-6 items-center shadow-lg">
+                        <div class="p-4 bg-emerald-500/20 rounded-xl text-emerald-400 text-3xl font-bold border border-emerald-500/30">1</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Continuous Numeric Scaling</h3>
+                            <p class="text-xl text-slate-300">Variables like <span class="text-emerald-300">N, P, K, Temperature, Humidity, pH, and Rainfall</span> were scaled tightly using <code>StandardScaler</code> to completely prevent algorithmic weight biases.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/80 border border-slate-600 rounded-2xl p-8 flex gap-6 items-center shadow-lg">
+                        <div class="p-4 bg-blue-500/20 rounded-xl text-blue-400 text-3xl font-bold border border-blue-500/30">2</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Categorical Dimensional Flattening</h3>
+                            <p class="text-xl text-slate-300">Variables like <span class="text-blue-300">State, District, Soil Type, and Crop Label</span> were meticulously broken down via <code>OneHotEncoder</code> to remove hierarchical confusion.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/80 border border-slate-600 rounded-2xl p-8 flex gap-6 items-center shadow-lg">
+                        <div class="p-4 bg-amber-500/20 rounded-xl text-amber-500 text-3xl font-bold border border-amber-500/30">3</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Training Scarcity Logic</h3>
+                            <p class="text-xl text-slate-300">Data completely randomized and split into <strong>80% Training Data</strong> and <strong>20% Testing sets</strong> to ensure true cross-validation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 7</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Algorithms Evaluated</h2>
+                </div>
+                <div class="flex flex-wrap gap-6 justify-center items-center flex-1 max-w-5xl mx-auto w-full content-center pb-8">
+                    <div class="p-8 bg-slate-800/50 rounded-3xl border border-slate-700 text-center w-full md:w-[48%]">
+                        <div class="text-3xl font-bold text-slate-400 mb-2">Linear Baseline</div>
+                        <div class="text-2xl text-white">Ridge Regression</div>
+                    </div>
+                    <div class="p-8 bg-slate-800/50 rounded-3xl border border-slate-700 text-center w-full md:w-[48%] transform hover:scale-105 transition">
+                        <div class="text-3xl font-bold text-amber-400 mb-2">Ensemble Trees</div>
+                        <div class="text-2xl text-white">Random Forest Regressor</div>
+                    </div>
+                    <div class="p-8 bg-blue-900/20 rounded-3xl border border-blue-500/50 text-center w-full md:w-[48%] transform hover:scale-105 transition shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+                        <div class="text-3xl font-bold text-blue-400 mb-2">Gradient Boosting</div>
+                        <div class="text-2xl text-white">LightGBM</div>
+                    </div>
+                    <div class="p-8 bg-emerald-900/30 rounded-3xl border-2 border-emerald-500/70 text-center w-full md:w-[48%] transform hover:scale-105 transition shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                        <div class="text-3xl font-bold text-emerald-400 mb-2">Extreme Gradient</div>
+                        <div class="text-2xl text-white font-bold tracking-wider">XGBoost</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 8</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Model Comparison Results <span class="bg-amber-500 text-slate-900 text-lg px-2 rounded ml-2 align-middle">THE TRUTH</span></h2>
+                </div>
+                <div class="w-full mt-4 border border-slate-600 rounded-3xl overflow-hidden bg-slate-900/80 shadow-[0_30px_60px_rgba(0,0,0,0.5)] max-w-5xl mx-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-black/40 text-slate-300 text-lg sm:text-xl font-bold uppercase tracking-wider border-b border-slate-600">
+                            <tr>
+                                <th class="px-8 py-6">Algorithm</th>
+                                <th class="px-8 py-6 text-center">RMSE Error Metric</th>
+                                <th class="px-8 py-6 text-right">R² Score (Accuracy)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-2xl xl:text-3xl divide-y divide-slate-700/50">
+                            <tr class="hover:bg-slate-800/50 transition-colors">
+                                <td class="px-8 py-6 text-slate-400">Ridge Regression</td>
+                                <td class="px-8 py-6 text-center text-rose-400 font-medium">581.3</td>
+                                <td class="px-8 py-6 text-right text-slate-300 font-medium">0.8529</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/50 transition-colors">
+                                <td class="px-8 py-6 text-slate-300">Random Forest</td>
+                                <td class="px-8 py-6 text-center text-amber-400 font-medium">519.7</td>
+                                <td class="px-8 py-6 text-right text-emerald-200 font-bold">0.8824</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/50 transition-colors">
+                                <td class="px-8 py-6 text-slate-300">LightGBM</td>
+                                <td class="px-8 py-6 text-center text-amber-300 font-medium">503.0</td>
+                                <td class="px-8 py-6 text-right text-emerald-300 font-bold">0.8898</td>
+                            </tr>
+                            <tr class="bg-emerald-900/30 border-l-8 border-emerald-500 shadow-inner">
+                                <td class="px-8 py-8 font-black text-emerald-400 uppercase tracking-wider">🌟 XGBoost</td>
+                                <td class="px-8 py-8 text-center text-emerald-400 font-black">376.7</td>
+                                <td class="px-8 py-8 text-right text-emerald-400 font-black text-4xl">0.9382 🏆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Slide 9 -->
+            <div class="slide justify-center items-center text-center">
+                <span class="px-4 py-1.5 mb-6 text-sm font-bold tracking-widest text-emerald-400 uppercase border border-emerald-500/30 rounded-full bg-emerald-500/10">Slide 9</span>
+                <h3 class="text-3xl text-slate-400 font-medium tracking-wide mb-2 uppercase">The Ultimate Champion</h3>
+                <h1 class="text-6xl sm:text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-green-600 mb-12 drop-shadow-2xl">XGBoost</h1>
+                
+                <div class="bg-slate-800/50 border border-slate-600 p-8 md:p-12 rounded-3xl max-w-4xl w-full text-left">
+                    <h4 class="text-3xl font-bold text-white mb-8 border-b border-slate-700 pb-4">Why XGBoost Won with <span class="text-emerald-400">93.8%</span> Accuracy:</h4>
+                    <ul class="text-xl md:text-2xl text-slate-300 space-y-6">
+                        <li class="flex items-start"><span class="text-emerald-400 mr-4 text-3xl">✓</span> Masterfully handles complex, deep non-linear relationships without breaking assumptions.</li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-4 text-3xl">✓</span> Utilizes aggressive histogram-based tree splitting for rapid performance over thousands of unique districts.</li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-4 text-3xl">✓</span> Specifically caught severe edge cases in extreme weather models where standard Random Forest generalized them out.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 10 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 10</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-blue-400">Advanced Engine #1: <span class="text-white">Crop Recommender</span></h2>
+                </div>
+                <div class="bg-blue-900/20 border border-blue-500/30 rounded-3xl p-8 md:p-12 mt-4 max-w-5xl mx-auto w-full flex flex-col gap-8 h-full justify-center">
+                    <div class="flex flex-col md:flex-row justify-between items-center bg-slate-900/50 p-6 rounded-2xl border border-slate-700 shadow-xl gap-6">
+                        <div class="text-center md:text-left flex-1">
+                            <h3 class="text-xl font-medium text-slate-400 uppercase tracking-widest mb-1">Architecture Pipeline</h3>
+                            <h4 class="text-3xl font-bold text-white">Random Forest Classifier</h4>
+                        </div>
+                        <div class="text-7xl">🚜</div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-6 h-full items-stretch">
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex-1 flex flex-col justify-center border-l-4 border-l-amber-500">
+                            <h4 class="text-xl text-amber-500 font-bold mb-4 uppercase">Input Parameters</h4>
+                            <p class="text-2xl text-white font-medium">N, P, K, Temperature, Humidity, pH, Rainfall</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex-[0.2] flex items-center justify-center">
+                            <span class="text-4xl text-slate-500 font-black">➔</span>
+                        </div>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex-1 flex flex-col justify-center border-l-4 border-l-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                            <h4 class="text-xl text-emerald-400 font-bold mb-4 uppercase">Exact Output</h4>
+                            <p class="text-2xl text-white font-medium">Dynamically outputs the mathematically perfect crop (Out of 13) for that precise geographic sub-climate.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="px-3 py-1 text-xs font-bold text-amber-400 border border-amber-500/30 rounded-full">Slide 11</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-amber-400 drop-shadow-md">Advanced Engine #2: <span class="text-white">"Auto-Optimize"</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-center">
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-3">How it works:</h3>
+                            <p class="text-xl text-slate-300 leading-relaxed border-l-4 border-slate-600 pl-4">The backend engine deeply scans the entire global database purely for the <strong>top 25% percentile</strong> yielding farms for any specific designated crop.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-emerald-400 mb-3">The Mathematical Edge:</h3>
+                            <p class="text-xl text-white bg-slate-800/50 p-6 rounded-2xl border border-slate-600 leading-relaxed shadow-lg">It extracts their exact median <span class="font-bold text-amber-400">Nitrogen</span>, <span class="font-bold text-amber-400">Phosphorous</span>, <span class="font-bold text-amber-400">Potassium</span>, and <span class="font-bold text-amber-400">pH</span> strings, permanently registering them as a <span class="italic text-emerald-300 font-serif">"gold-standard workflow benchmark"</span> to instantly optimize the user's farm.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center relative p-8">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-amber-500/20 to-emerald-500/20 rounded-full blur-3xl"></div>
+                        <div class="relative glass-panel rounded-3xl p-8 border border-white/20 shadow-2xl w-full text-center">
+                            <h4 class="text-xl text-slate-300 mb-6 uppercase tracking-widest font-bold">Real-time Optimization</h4>
+                            <div class="text-6xl mb-6">📈</div>
+                            <div class="text-3xl font-bold text-emerald-400">Yield Optimized.</div>
+                            <div class="text-xl text-slate-400 mt-2">from 0.778 t/ha ➔ 1.193 t/ha</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 12 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 12</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Advanced Engine #3: <span class="text-emerald-400 border-b border-dashed border-emerald-400">API & Async Flow</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-full max-w-6xl mx-auto">
+                    <div class="bg-indigo-900/20 border-t-4 border-indigo-500 p-8 rounded-3xl flex flex-col justify-center">
+                        <div class="text-5xl mb-6 bg-indigo-500/20 w-max p-4 rounded-2xl">🌦️</div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Live Open-Meteo Integration</h3>
+                        <p class="text-xl text-slate-300 leading-relaxed">If a localized historical user doesn't know their extreme micro-climate weather properties, our FastAPI endpoints ping the live global Open-Meteo API for real-time localized fallback data mapping.</p>
+                    </div>
+                    <div class="bg-teal-900/20 border-t-4 border-teal-500 p-8 rounded-3xl flex flex-col justify-center">
+                        <div class="text-5xl mb-6 bg-teal-500/20 w-max p-4 rounded-2xl">📑</div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Bulk/Batch CSV Processing</h3>
+                        <p class="text-xl text-slate-300 leading-relaxed">Instantly execute AI predictions on literally thousands of acres simultaneously via advanced internal Pandas aggregation using our designated <code>POST /predict/batch</code> endpoints.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 13 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 13</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Enterprise UI Architecture</h2>
+                </div>
+                <div class="flex flex-col justify-center h-full max-w-5xl mx-auto w-full gap-6">
+                    <div class="bg-slate-800/40 border border-slate-700/50 p-6 md:p-8 rounded-3xl flex items-center gap-6 shadow-xl">
+                        <div class="text-5xl text-cyan-400 px-4">🎨</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Modern Aesthetics</h3>
+                            <p class="text-xl text-slate-400">Deep, tactical Glassmorphism UI aesthetic via aggressive TailwindCSS layouts replacing archaic, boring generic dashboard views.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/40 border border-slate-700/50 p-6 md:p-8 rounded-3xl flex items-center gap-6 shadow-xl">
+                        <div class="text-5xl text-blue-500 px-4">⚛️</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">React 18 Flow</h3>
+                            <p class="text-xl text-slate-400">Full monolithic React integration handling highly dynamic state changes and continuous component rendering.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/40 border border-slate-700/50 p-6 md:p-8 rounded-3xl flex items-center gap-6 shadow-xl border-l-4 border-l-emerald-500">
+                        <div class="text-5xl text-emerald-400 px-4">📜</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-emerald-200 mb-2">"Ground Truth" Tables</h3>
+                            <p class="text-xl text-slate-300">Displays real-time historical verification records so farmers visually confirm AI logic accuracy before ever acting upon it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 14 -->
+            <div class="slide justify-center max-w-5xl mx-auto w-full">
+                <span class="px-3 py-1 text-xs font-bold text-rose-400 border border-rose-500/30 rounded-full self-start mb-8 block w-max bg-rose-900/20">Slide 14</span>
+                <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center text-white">Core Challenges Overcome</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-rose-950/30 border border-rose-900 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(225,29,72,0.2)] transition">
+                        <div class="text-4xl mb-4 bg-rose-500/20 w-max px-4 py-2 rounded-xl text-rose-500">🌌</div>
+                        <h4 class="text-2xl font-bold text-rose-200 mb-4">Massive Dimensionality</h4>
+                        <p class="text-xl text-slate-300 leading-relaxed">Managing over 30 entire Indian States encompassing literally hundreds of distinct sub-districts without massively fragmenting the core OneHotEncoder splits into oblivion.</p>
+                    </div>
+                    <div class="bg-orange-950/30 border border-orange-900 p-8 rounded-3xl shadow-xl hover:shadow-[0_0_30px_rgba(234,88,12,0.2)] transition">
+                        <div class="text-4xl mb-4 bg-orange-500/20 w-max px-4 py-2 rounded-xl text-orange-500">⚙️</div>
+                        <h4 class="text-2xl font-bold text-orange-200 mb-4">Pipeline Integration</h4>
+                        <p class="text-xl text-slate-300 leading-relaxed">Compressing and wrapping the heavy Data Scalers directly inside the serialized <code>.pkl</code> XGBoost models to cleanly pass the payload parameters throughout the FastAPI runtime server natively.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15 -->
+            <div class="slide justify-center max-w-5xl mx-auto w-full">
+                <span class="px-3 py-1 text-xs font-bold text-cyan-400 border border-cyan-500/30 rounded-full self-start mb-8 block w-max">Slide 15</span>
+                <h2 class="text-4xl md:text-6xl font-bold mb-10 text-center text-cyan-300">Future Scope 🚀</h2>
+                <div class="space-y-6 text-xl md:text-2xl text-slate-200">
+                    <div class="p-6 md:p-8 bg-slate-800/40 rounded-3xl border border-slate-700 flex gap-6 items-center shadow-lg transition hover:bg-slate-800">
+                        <span class="text-5xl">📡</span> 
+                        <div><strong class="text-white block mb-1">Live Soil-Sensor Grids:</strong> Moving immediately beyond manual inputs straight into localized smart IoT hardware syncing.</div>
+                    </div>
+                    <div class="p-6 md:p-8 bg-slate-800/40 rounded-3xl border border-slate-700 flex gap-6 items-center shadow-lg transition hover:bg-slate-800">
+                        <span class="text-5xl">📱</span> 
+                        <div><strong class="text-white block mb-1">React Native Port:</strong> Releasing completely automated mobile phone versions for deep in-the-field utilization dynamically.</div>
+                    </div>
+                    <div class="p-6 md:p-8 bg-slate-800/40 rounded-3xl border border-slate-700 flex gap-6 items-center shadow-lg transition hover:bg-slate-800">
+                        <span class="text-5xl">📄</span> 
+                        <div><strong class="text-white block mb-1">Automated PDF Reporting:</strong> Scaling out current `html2canvas` tooling capabilities for mass-production analytics printing.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 16 -->
+            <div class="slide justify-center max-w-4xl mx-auto w-full">
+                <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full self-start mb-6 block w-max">Slide 16</span>
+                <h2 class="text-4xl md:text-6xl font-bold mb-10 text-white">Conclusion</h2>
+                <div class="space-y-8 text-2xl md:text-3xl text-slate-300 font-light leading-relaxed">
+                    <p class="flex gap-6 items-start bg-slate-800/30 p-6 rounded-2xl border-l-4 border-emerald-500">
+                        <span class="text-emerald-400 text-4xl mt-1">1.</span> 
+                        <span class="text-slate-200"><strong>XGBoost completely dominates</strong> deep agricultural variance tracking achieving an extreme <strong>93.8% prediction accuracy</strong>.</span>
+                    </p>
+                    <p class="flex gap-6 items-start bg-slate-800/30 p-6 rounded-2xl border-l-4 border-cyan-500">
+                        <span class="text-cyan-400 text-4xl mt-1">2.</span> 
+                        <span class="text-slate-200">By meticulously coupling live <strong>Crop Recommendation</strong>, highly specific <strong>Yield Prediction</strong>, and complex algorithmic <strong>Farm Optimization Benchmarking</strong>, AgriYield absolutely transcends simple AI calculation boundaries to act as a <strong>full-scale agricultural management system.</strong></span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 17 -->
+            <div class="slide">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30 rounded-full">Slide 17</span>
+                    <h2 class="text-3xl md:text-5xl font-bold">Tech Stack Retrospective</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 h-full items-center">
+                    <div class="bg-indigo-900/30 border border-indigo-500/30 p-8 rounded-3xl text-center h-[250px] flex flex-col justify-center items-center shadow-xl">
+                        <div class="text-5xl mb-4">⚛️</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Frontend</h4>
+                        <p class="text-indigo-200 font-medium">React 18<br/>Vite<br/>Tailwind CSS</p>
+                    </div>
+                    <div class="bg-emerald-900/30 border border-emerald-500/30 p-8 rounded-3xl text-center h-[250px] flex flex-col justify-center items-center shadow-xl">
+                        <div class="text-5xl mb-4">🐍</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Backend Runtime</h4>
+                        <p class="text-emerald-200 font-medium">Python 3.9<br/>FastAPI<br/>Uvicorn</p>
+                    </div>
+                    <div class="bg-amber-900/30 border border-amber-500/30 p-8 rounded-3xl text-center h-[250px] flex flex-col justify-center items-center shadow-xl">
+                        <div class="text-5xl mb-4">🧠</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Machine Learning</h4>
+                        <p class="text-amber-200 font-medium">Scikit-Learn<br/>XGBoost<br/>Pandas</p>
+                    </div>
+                    <div class="bg-rose-900/30 border border-rose-500/30 p-8 rounded-3xl text-center h-[250px] flex flex-col justify-center items-center shadow-xl">
+                        <div class="text-5xl mb-4">☁️</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Cloud Strategy</h4>
+                        <p class="text-rose-200 font-medium">Render Setup<br/>Monolithic Server<br/>GitHub CI/CD</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18 -->
+             <div class="slide items-center justify-center text-center">
+                <h1 class="text-6xl sm:text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-cyan-500 mb-8 drop-shadow-2xl tracking-tight">Thank You!</h1>
+                <h2 class="text-3xl md:text-4xl text-slate-300 mb-10 font-medium">For Your Attention</h2>
+                <div class="bg-slate-800/60 p-6 md:p-8 rounded-3xl border border-slate-600 inline-block text-center shadow-2xl backdrop-blur-md hover:bg-slate-800 transition">
+                    <p class="text-emerald-400 text-xl md:text-2xl font-bold uppercase tracking-widest mb-4 border-b border-slate-600 pb-4">Live Production Access Hosted At</p>
+                    <a href="https://agriyield-predictor-forecasting-crop.onrender.com" target="_blank" class="text-white text-xl md:text-3xl font-bold hover:text-emerald-300 transition-colors inline-block mt-2 font-mono">agriyield-predictor-forecasting-crop.onrender.com</a>
+                </div>
+                <p class="mt-12 text-slate-400 text-2xl animate-pulse">Now open for Technical Q&A...</p>
+             </div>
+
+        </div>
+    </main>
+
+    <!-- Controls -->
+    <div class="relative z-20 w-full px-6 py-4 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800 flex justify-between items-center text-sm md:text-base font-medium">
+        <button id="prevBtn" class="px-6 py-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 border border-slate-600 shadow-sm" onclick="nav(-1)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Previous
+        </button>
+        <div class="flex items-center gap-6">
+            <span class="text-slate-300 tracking-widest bg-slate-950/80 px-6 py-2 rounded-xl border border-slate-700/80 shadow-inner font-mono text-lg">
+                <span id="counter" class="text-emerald-400 font-bold">1</span> / 18
+            </span>
+            <button onclick="toggleNotes()" class="hidden sm:inline-flex px-4 py-2 text-slate-400 hover:text-emerald-400 transition-colors uppercase tracking-widest text-xs font-bold border border-transparent hover:border-emerald-900/50 rounded-lg">
+                Toggle Notes [N]
+            </button>
+        </div>
+        <button id="nextBtn" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)] disabled:shadow-none" onclick="nav(1)">
+            Next Slide <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+
+    <!-- Notes Panel -->
+    <div id="notes-panel" class="absolute bottom-0 left-0 w-full bg-slate-900/98 backdrop-blur-3xl border-t-2 border-emerald-500/50 p-8 pt-10 px-12 z-50 text-2xl font-serif text-emerald-50 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
+        <button onclick="toggleNotes()" class="absolute top-4 right-6 text-slate-400 hover:text-white text-sm uppercase tracking-widest font-sans font-bold flex items-center gap-2">Close <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="font-sans text-emerald-400 text-sm font-bold uppercase tracking-widest mb-4">Speaker Script / Notes:</div>
+        <p id="notes-display" class="leading-relaxed drop-shadow-md border-l-4 border-emerald-500 pl-6 text-xl md:text-2xl text-slate-200 indent-2 line-clamp-4">No notes available for this slide.</p>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentIdx = 0;
+
+        function nav(step) {
+            slides[currentIdx].classList.remove('active');
+            currentIdx += step;
+            if (currentIdx < 0) currentIdx = 0;
+            if (currentIdx >= slides.length) currentIdx = slides.length - 1;
+            render();
+        }
+
+        function render() {
+            slides[currentIdx].classList.add('active');
+            document.getElementById('counter').innerText = currentIdx + 1;
+            document.getElementById('prevBtn').disabled = currentIdx === 0;
+            document.getElementById('nextBtn').disabled = currentIdx === slides.length - 1;
+            
+            const activeNotesRaw = slides[currentIdx].querySelector('.notes');
+            const notesDisplay = document.getElementById('notes-display');
+            if(activeNotesRaw) {
+                notesDisplay.innerHTML = activeNotesRaw.innerHTML;
+            } else {
+                notesDisplay.innerHTML = `<em>Presenter notes guide the visual breakdown of the data dynamically. Use slide context!</em>`;
+            }
+        }
+
+        function toggleNotes() {
+            document.getElementById('notes-panel').classList.toggle('open');
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === 'Spacebar') nav(1);
+            if (e.key === 'ArrowLeft') nav(-1);
+            if (e.key.toLowerCase() === 'n') toggleNotes();
+        });
+
+        render();
+    </script>
+</body>
+</html>
