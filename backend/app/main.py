@@ -333,4 +333,12 @@ if frontend_dist.exists() and (frontend_dist / "index.html").exists():
     async def serve_static(full_path: str):
         if full_path.startswith("api/"):
             raise HTTPException(status_code=404, detail="API route not found")
+            
+        file_path = (frontend_dist / full_path).resolve()
+        try:
+            if file_path.exists() and file_path.is_file() and frontend_dist.resolve() in file_path.parents:
+                return FileResponse(file_path)
+        except Exception:
+            pass
+            
         return FileResponse(frontend_dist / "index.html")
