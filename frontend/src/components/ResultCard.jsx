@@ -5,29 +5,18 @@ import jsPDF from "jspdf";
 /* Crop → Unsplash image URL mapping (free, no API key, high-res) */
 const CROP_IMAGES = {
   rice:        "https://images.unsplash.com/photo-1536054960546-15b37f7c9e02?w=800&q=80",
-  wheat:       "/images/hero_wheat.png",
   maize:       "/images/corn_field.png",
-  corn:        "/images/corn_field.png",
-  sugarcane:   "https://images.unsplash.com/photo-1581368135153-a506cf13b1e1?w=800&q=80",
+  chickpea:    "https://images.unsplash.com/photo-1515589654645-8b1784ebaf0b?w=800&q=80",
+  kidneybeans: "https://images.unsplash.com/photo-1551133989-1dc3e5f22f77?w=800&q=80",
+  pigeonpeas:  "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=800&q=80",
+  mothbeans:   "https://images.unsplash.com/photo-1596547609652-9cb5d8d76921?w=800&q=80",
+  mungbean:    "https://images.unsplash.com/photo-1515589654645-8b1784ebaf0b?w=800&q=80",
+  blackgram:   "https://images.unsplash.com/photo-1551133989-1dc3e5f22f77?w=800&q=80",
+  lentil:      "https://images.unsplash.com/photo-1596547609652-9cb5d8d76921?w=800&q=80",
   cotton:      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&q=80",
-  soybean:     "https://images.unsplash.com/photo-1567318622203-92a88f1f5d40?w=800&q=80",
-  groundnut:   "https://images.unsplash.com/photo-1559181567-c3190bfa4614?w=800&q=80",
-  jowar:       "/images/hero_wheat.png",
-  bajra:       "/images/hero_wheat.png",
-  ragi:        "/images/hero_wheat.png",
-  barley:      "/images/hero_wheat.png",
-  potato:      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&q=80",
-  tomato:      "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=800&q=80",
-  onion:       "https://images.unsplash.com/photo-1508747703725-719777637510?w=800&q=80",
-  mustard:     "/images/hero_wheat.png",
-  sunflower:   "https://images.unsplash.com/photo-1470509037663-253d2d33ef8c?w=800&q=80",
-  jute:        "/images/rice_paddy.png",
-  tea:         "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800&q=80",
-  coffee:      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",
-  rubber:      "/images/rice_paddy.png",
+  jute:        "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800&q=80",
   coconut:     "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&q=80",
   banana:      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&q=80",
-  mango:       "https://images.unsplash.com/photo-1553279768-865429fa0078?w=800&q=80",
   default:     "/images/aerial_farm.png",
 };
 
@@ -132,9 +121,6 @@ export default function ResultCard({ result, crop, soilType, historicalData = []
             </div>
           )}
         </div>
-        <span className={`badge text-sm px-3 py-1 rounded-full font-semibold ${badge.color}`}>
-          {badge.label}
-        </span>
       </div>
 
       {ci_lower !== null && ci_upper !== null && (
